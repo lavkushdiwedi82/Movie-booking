@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #booking-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #booking-details {
+            margin-top: 20px;
+        }
+
+        #booking-details p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="booking-form">
+        <h2>Movie Ticket Booking</h2>
+        <label for="movie">Movie:</label>
+        <select id="movie" required>
+            <option value="movie1">Movie 1</option>
+            <option value="movie2">Movie 2</option>
+            <!-- Add more movie options as needed -->
+        </select>
+
+        <label for="time">Screening Time:</label>
+        <select id="time" required>
+            <option value="time1">10:00 AM</option>
+            <option value="time2">1:00 PM</option>
+            <!-- Add more screening time options as needed -->
+        </select>
+
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="tickets">Number of Tickets:</label>
+        <input type="number" id="tickets" min="1" required>
+
+        <button onclick="bookTicket()">Book Now</button>
+    </div>
+
+    <div id="booking-details">
+        <h3>Booking Details</h3>
+        <p>Total Booked Seats: <span id="total-booked">0</span></p>
+        <p>Available Slots: <span id="available-slots">0</span></p>
+        <p>User Name: <span id="user-name">-</span></p>
+        <p>Seat Number: <span id="seat-number">-</span></p>
+    </div>
+
+    <script>
+        var totalBookedSeats = 0;
+        var availableSlots = 100; // Assuming 100 available seats initially
+
+        function bookTicket() {
+            var movie = document.getElementById('movie').value;
+            var time = document.getElementById('time').value;
+            var name = document.getElementById('name').value;
+            var tickets = parseInt(document.getElementById('tickets').value);
+
+            if (tickets <= availableSlots) {
+                totalBookedSeats += tickets;
+                availableSlots -= tickets;
+
+                document.getElementById('total-booked').innerText = totalBookedSeats;
+                document.getElementById('available-slots').innerText = availableSlots;
+                document.getElementById('user-name').innerText = name;
+
+                // Simulate seat numbers; you can implement your logic here
+                var seatNumbers = generateSeatNumbers(tickets);
+                document.getElementById('seat-number').innerText = seatNumbers.join(', ');
+
+                alert("Booking successful!\nMovie: " + movie + "\nTime: " + time + "\nTickets: " + tickets);
+            } else {
+                alert("Sorry, not enough available seats. Please choose a lower number of tickets.");
+            }
+        }
+
+        function generateSeatNumbers(num) {
+            var seatNumbers = [];
+            for (var i = 1; i <= num; i++) {
+                seatNumbers.push('A' + (totalBookedSeats + i));
+            }
+            return seatNumbers;
+        }
+    </script>
+
+</body>
+</html>
